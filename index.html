@@ -1,0 +1,57 @@
+<html lang="pt-br">
+    <head>
+        <title>Primeiro Desafio Técnico</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <form id="Frm_Desafio" action="#">
+            <label>Digite um número (inteiro e positivo): </label><br/>
+            <input type="text" id="txt_numero" name="numero" required/><br/>
+            <br/>
+            <button type="submit" id="btn_enviar">Enviar</button><br/>
+            <br/>
+            <label>Somatório de todos os valores inteiros divisíveis por 3 ou 5 que sejam inferiores ao número informado: </label></br>
+            <input type="text" id="txt_resultante" readonly/>
+        </form>
+    </body>
+    <script src="dist/js/jquery.js"></script>
+    <script>
+        Frm_Desafio.onsubmit = function()
+        {
+            $.ajax
+            (
+                {
+                    url: 'dist/php/somatorio.php',
+                    method: 'post',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    beforeSend: function()
+                    {
+                        btn_enviar.disabled = true;
+                    },
+                    success: function(response)
+                    {
+                        if ('vl_resultante' in response)
+                        {
+                            txt_resultante.value = response.vl_resultante;
+                        }
+                        else
+                        {
+                            console.log(response);
+                        }
+                    },
+                    error: function(error)
+                    {
+                        console.log(error);
+                    },
+                    complete: function()
+                    {
+                        btn_enviar.disabled = false;
+                    }
+                }
+            );
+
+            return false;
+        }
+    </script>
+</html>
