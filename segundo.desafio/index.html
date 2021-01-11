@@ -1,0 +1,77 @@
+<html lang="pt-br">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8"/>
+
+        <title>Segundo Desafio Técnico</title>
+
+        <link href="dist/css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="content horizontal-center">
+            <div class="row h-100" style="width: 100%; padding: 15px;">
+                <div class="col-12 col-sm-6" style="margin-bottom: 15px;">
+                    <div>
+                        <img src="dist/img/jogo.jpg" style="width: 100%;">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <form action="#" onsubmit="return false;">
+                        <input type="button" id="btn_iniciar" value="Iniciar/Reiniciar Jogo" onclick="iniciarJogo();"/><br/>
+                        <br/>
+                        <label>Jogador 1: <span id="txt_jogador1">0</span></label><br/>
+                        <label>Jogador 2: <span id="txt_jogador2">0</span></label><br/>
+                        <br/>
+                        <label>Agora é a vez do jogador <span id="txt_jogadorAtual">0</span>!</label></br>
+                        <br/>
+                        <input type="button" id="btn_jogar" value="Jogar Dados" onclick="if (txt_resultado.textContent == '') {jogarDados();}"/><br/>
+                        <br/>
+                        <label>Dado 1: <span id="txt_dado1"></span></label><br/>
+                        <label>Dado 2: <span id="txt_dado2"></span></label><br/>
+                        <br/>
+                        <label id="txt_resultado"></label><br/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="dist/js/jquery.js"></script>
+    <script src="dist/js/bootstrap.js"></script>
+    <script src="dist/js/CobrasEscadas.js"></script>
+    <script>
+        window.onload = function()
+        {
+            iniciarJogo();
+        }
+
+        function iniciarJogo()
+        {
+            jogo = new CobrasEscadas();
+
+            txt_resultado.textContent = '';
+            txt_dado1.textContent = '';
+            txt_dado2.textContent = '';
+
+            txt_jogador1.textContent = jogo.jogadores[0].posicaoAtual;
+            txt_jogador2.textContent = jogo.jogadores[1].posicaoAtual;
+
+            txt_jogadorAtual.textContent = jogo.jogadorAtual;
+        }
+
+        function jogarDados()
+        {
+            var dado1 = Math.floor((Math.random() * 6) + 1);
+            var dado2 = Math.floor((Math.random() * 6) + 1);
+
+            txt_dado1.textContent = dado1;
+            txt_dado2.textContent = dado2;
+
+            txt_resultado.textContent = jogo.jogar(dado1, dado2);
+
+            txt_jogador1.textContent = jogo.jogadores[0].posicaoAtual;
+            txt_jogador2.textContent = jogo.jogadores[1].posicaoAtual;
+
+            txt_jogadorAtual.textContent = jogo.jogadorAtual;
+        }
+    </script>
+</html>
